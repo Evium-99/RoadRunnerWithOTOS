@@ -32,6 +32,30 @@ public class Subsystems {
             capPID.setIntegrationBounds(0, 0.01);
             capPID.setTolerance(8);
         }
+        public class ToChamberPlus22 implements Action {
+            private boolean initialized = false;
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    capPID.reset();
+                    initialized = true;
+                }
+                double pos = cap.getCurrentPosition();
+                double capPower = capPID.calculate(pos, 408.5);
+                cap.setPower(capPower);
+                cap2.setPower(capPower);
+                if (capPID.atSetPoint()) {
+                    cap.setPower(0);
+                    cap2.setPower(0);
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+        public Action ToChamberPlus22() {
+            return new ToChamberPlus22();
+        }
 
         public class ToChamber implements Action {
             private boolean initialized = false;
@@ -56,6 +80,152 @@ public class Subsystems {
         }
         public Action ToChamber() {
             return new ToChamber();
+        }
+
+        public class ToChamberPlus19 implements Action {
+            private boolean initialized = false;
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    capPID.reset();
+                    initialized = true;
+                }
+                double pos = cap.getCurrentPosition();
+                double capPower = capPID.calculate(pos, 403);
+                cap.setPower(capPower);
+                cap2.setPower(capPower);
+                if (capPID.atSetPoint()) {
+                    cap.setPower(0);
+                    cap2.setPower(0);
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+        public Action ToChamberPlus19() {
+            return new ToChamberPlus19();
+        }
+
+        public class ToChamberMinus50 implements Action {
+            private boolean initialized = false;
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    capPID.reset();
+                    initialized = true;
+                }
+                double pos = cap.getCurrentPosition();
+                double capPower = capPID.calculate(pos, 335);
+                cap.setPower(capPower);
+                cap2.setPower(capPower);
+                if (capPID.atSetPoint()) {
+                    cap.setPower(0);
+                    cap2.setPower(0);
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+        public Action ToChamberMinus50() {
+            return new ToChamberMinus50();
+        }
+        public class ToChamberMinus12 implements Action {
+            private boolean initialized = false;
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    capPID.reset();
+                    initialized = true;
+                }
+                double pos = cap.getCurrentPosition();
+                double capPower = capPID.calculate(pos, 373);
+                cap.setPower(capPower);
+                cap2.setPower(capPower);
+                if (capPID.atSetPoint()) {
+                    cap.setPower(0);
+                    cap2.setPower(0);
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+        public Action ToChamberMinus12() {
+            return new ToChamberMinus12();
+        }
+        public class ToChamberPlus50 implements Action {
+            private boolean initialized = false;
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    capPID.reset();
+                    initialized = true;
+                }
+                double pos = cap.getCurrentPosition();
+                double capPower = capPID.calculate(pos, 435);
+                cap.setPower(capPower);
+                cap2.setPower(capPower);
+                if (capPID.atSetPoint()) {
+                    cap.setPower(0);
+                    cap2.setPower(0);
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+        public Action ToChamberPlus50() {
+            return new ToChamberPlus50();
+        }
+        public class ToChamberPlus25 implements Action {
+            private boolean initialized = false;
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    capPID.reset();
+                    initialized = true;
+                }
+                double pos = cap.getCurrentPosition();
+                double capPower = capPID.calculate(pos, 409);
+                cap.setPower(capPower);
+                cap2.setPower(capPower);
+                if (capPID.atSetPoint()) {
+                    cap.setPower(0);
+                    cap2.setPower(0);
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+        public Action ToChamberPlus25() {
+            return new ToChamberPlus25();
+        }
+        public class ToChamberPlus12 implements Action {
+            private boolean initialized = false;
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    capPID.reset();
+                    initialized = true;
+                }
+                double pos = cap.getCurrentPosition();
+                double capPower = capPID.calculate(pos, 397);
+                cap.setPower(capPower);
+                cap2.setPower(capPower);
+                if (capPID.atSetPoint()) {
+                    cap.setPower(0);
+                    cap2.setPower(0);
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+        public Action ToChamberPlus12() {
+            return new ToChamberPlus12();
         }
 
         public class ToRest implements Action {

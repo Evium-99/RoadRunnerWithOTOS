@@ -32,8 +32,10 @@ public class Teleoperated2 extends OpMode {
     private double capSetpoint = 0;
 
     // Servo Button Toggles
+    private double togC = 0;
     private double vindoViper = 0;
     private boolean switchViperDirection = false;
+    private boolean togCD = false;
     private double capPower;
     private Rev2mDistanceSensor frontDistance;
     private Rev2mDistanceSensor backDistance;
@@ -142,19 +144,42 @@ public class Teleoperated2 extends OpMode {
         backLeftMotor.setPower(y - x + rx);
         frontRightMotor.setPower(y - x - rx);
         backRightMotor.setPower(y + x - rx);
-        if (gamepad2.x) {
+        if (gamepad2.y) {
             LSLower.setPosition(0.07);
             LSTop.setPosition(0.93);
         }
-        if (gamepad2.a) {
-            LSLower.setPosition(0.73);
-            LSTop.setPosition(0.27);
+        if ((gamepad2.a)) {
+            if (togC < 0.94) {
+                togCD = true;
+            }
+            if (togC > 0.06) {
+                togCD = false;
+            }
+            if (togCD) {
+                togC = togC + 0.025;
+            } else {
+                togC = togC - 0.025;
+            }
+            LSLower.setPosition(1 - togC);
+            LSTop.setPosition(0 + togC);
         }
-        if (gamepad2.y) {
-            LSLower.setPosition(0.4);
-            LSTop.setPosition(0.6);
+        //unetbjnebojn
+        if ((gamepad2.x)) {
+            if (togC > 0.94) {
+                togCD = true;
+            }
+            if (togC < 0.06) {
+                togCD = false;
+            }
+            if (togCD) {
+                togC = togC - 0.025;
+            } else {
+                togC = togC + 0.025;
+            }
+            LSLower.setPosition(1 - togC);
+            LSTop.setPosition(0 + togC);
         }
-        if ((gamepad2.b) || (gamepad1.b)) {
+        if ((gamepad2.b)) {
             if (vindoViper > 0.94) {
                 switchViperDirection = true;
             }
@@ -169,11 +194,15 @@ public class Teleoperated2 extends OpMode {
             LSLower.setPosition(1 - vindoViper);
             LSTop.setPosition(1 - vindoViper);
         }
+        int capSpeed = 10;
+        if (gamepad2.left_bumper) {
+            capSpeed = 25;
+        }
         if (gamepad2.left_trigger > 0.05) {
-            capSetpoint = (capSetpoint - (gamepad2.left_trigger * 10));
+            capSetpoint = (capSetpoint - (gamepad2.left_trigger * capSpeed));
         }
         if (gamepad2.right_trigger > 0.05) {
-            capSetpoint = (capSetpoint + (gamepad2.right_trigger * 10));
+            capSetpoint = (capSetpoint + (gamepad2.right_trigger * capSpeed));
         }
         if (gamepad2.dpad_up) {
             capSetpoint = 375;
