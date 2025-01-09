@@ -34,9 +34,10 @@ public class MainAuto2Plus22 extends LinearOpMode {
                 .build();
 
         Action moveSamples = drive.actionBuilder(initialPose)
-                .strafeTo(new Vector2d(37.375, -37.71875)) // Move to the right
-                .strafeTo(new Vector2d(37.375, -14.71875)) // Move Forward
-                .strafeTo(new Vector2d(45.875, -14.71875)) // Move to Right
+                .strafeTo(new Vector2d(8.875, -60)) // Move Back
+                .strafeTo(new Vector2d(36, -60)) // Move to the right
+                .strafeTo(new Vector2d(36, -13.71875)) // Move Forward
+                .strafeTo(new Vector2d(45.875, -13.71875)) // Move to Right
                 .strafeTo(new Vector2d(45.875, -53.46875)) // Move to Wall
                 .build();
 

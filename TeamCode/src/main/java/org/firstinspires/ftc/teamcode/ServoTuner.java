@@ -17,7 +17,6 @@ import org.firstinspires.ftc.robotcontroller.external.samples.SensorREV2mDistanc
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Disabled
 @Config
 @TeleOp(name="ServoTuner", group="TeleOp")
 public class ServoTuner extends OpMode {

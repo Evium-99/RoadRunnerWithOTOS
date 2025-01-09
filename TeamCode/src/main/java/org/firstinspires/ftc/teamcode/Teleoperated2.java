@@ -41,6 +41,8 @@ public class Teleoperated2 extends OpMode {
     private Rev2mDistanceSensor backDistance;
     private boolean emergencyDisableLimit = false;
     private boolean emergencyDisableLimitDown = false;
+    private double percentOpen = 0.5;
+    private boolean yLock = false;
     private PIDController distancePID = new PIDController(0.1, 0, 0);
 
     // Servos
@@ -138,48 +140,20 @@ public class Teleoperated2 extends OpMode {
             x = gamepad1.left_stick_x;
             rx = gamepad1.right_stick_x;
         }
-
         // Set power to motors
         frontLeftMotor.setPower(y + x + rx);
         backLeftMotor.setPower(y - x + rx);
         frontRightMotor.setPower(y - x - rx);
         backRightMotor.setPower(y + x - rx);
-        if (gamepad2.y) {
-            LSLower.setPosition(0.07);
-            LSTop.setPosition(0.93);
+        if (gamepad2.x && (percentOpen < 1)) {
+            percentOpen = percentOpen + 0.05;
+            yLock = false;
         }
-        if ((gamepad2.a)) {
-            if (togC < 0.94) {
-                togCD = true;
-            }
-            if (togC > 0.06) {
-                togCD = false;
-            }
-            if (togCD) {
-                togC = togC + 0.025;
-            } else {
-                togC = togC - 0.025;
-            }
-            LSLower.setPosition(1 - togC);
-            LSTop.setPosition(0 + togC);
+        if (gamepad2.a && (percentOpen > 0.25)) {
+            percentOpen = percentOpen - 0.05;
+            yLock = false;
         }
-        //unetbjnebojn
-        if ((gamepad2.x)) {
-            if (togC > 0.94) {
-                togCD = true;
-            }
-            if (togC < 0.06) {
-                togCD = false;
-            }
-            if (togCD) {
-                togC = togC - 0.025;
-            } else {
-                togC = togC + 0.025;
-            }
-            LSLower.setPosition(1 - togC);
-            LSTop.setPosition(0 + togC);
-        }
-        if ((gamepad2.b)) {
+        if (gamepad2.b) {
             if (vindoViper > 0.94) {
                 switchViperDirection = true;
             }
@@ -193,7 +167,21 @@ public class Teleoperated2 extends OpMode {
             }
             LSLower.setPosition(1 - vindoViper);
             LSTop.setPosition(1 - vindoViper);
+            yLock = false;
+            telemetry.addData("PercentOpen", "VINDOVIPER");
+        } else {
+            if (gamepad2.y || yLock) {
+                LSLower.setPosition(0.07);
+                LSTop.setPosition(0.93);
+                yLock = true;
+                telemetry.addData("PercentOpen", "VLOCK");
+            } else {
+                LSLower.setPosition(1 - percentOpen);
+                LSTop.setPosition(percentOpen);
+                telemetry.addData("PercentOpen", percentOpen);
+            }
         }
+
         int capSpeed = 10;
         if (gamepad2.left_bumper) {
             capSpeed = 25;
